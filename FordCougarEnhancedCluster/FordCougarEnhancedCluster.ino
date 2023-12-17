@@ -71,22 +71,11 @@ void setup() {
 
 void loop() {
   if (speedMode) {
-    // If GPS is to be configured...
-    //if (!gpsSetupDone) {
-    //  writeNumber(INT16_MAX);
-    //  updateLCD();
-      //startGPS();
-
-    //  gpsSetupDone = setupGPS(); 
-    //  GPS_SERIAL.begin(GPS_WANTED_BAUDRATE); 
-    //  gps.begin(); 
-    //}
-
     // Getting speed from GPS, flagging for update if it has changed
     updateData = getSpeed();
 
-    // Masking numbers on the byte array
-    writeNumber(speed);
+    // Masking numbers on the byte array for LCD 1 (left)
+    writeLCD1(speed);
   } else {
     //if (gpsSetupDone) stopGPS();
     //gpsSetupDone = false; // Reseting the GPS as not configured
@@ -125,12 +114,14 @@ bool getSpeed(){
       lastGpsRead = millis();
     }else{   // GPS is available BUT has no fix
       speed = INT16_MAX;
+      return true;
     }
   }
   else // GPS isn't available right now but are we within timeout specs?
   {
     if(millis() - lastGpsRead > gpsTimeout){  // Nope... 
       speed = INT16_MAX;
+      return true;
     }
   }
 
@@ -177,7 +168,7 @@ void receiveEvent(int howMany) {
   bytesDataLength = _bytesDataLength;
 
   // Is speed mode on?
-  speedMode = ((tempData[DATABYTESEL] & maskMPH) == maskMPH) ? 2 : ((tempData[DATABYTESEL] & maskKPH) == maskKPH) ? 1 : 0;
+  speedMode = tempData[DATABYTESEL] == maskMPH ? 2 : (tempData[DATABYTESEL] == maskKPH) ? 1 : 0;
 
   // Merging data bytes
   bytesData[DATABYTE1] = speedMode ? (tempData[DATABYTE1] & ((~mask & 0xff00000000) >> 32)) + (bytesData[DATABYTE1] & (mask & 0xff00000000) >> 32) : tempData[DATABYTE1];
@@ -206,14 +197,9 @@ void updateLCD(){
   SoftWire.write(bytesCmd, bytesCmdLength);     // Sending configuration commands
   SoftWire.write(bytesData, bytesDataLength);   // Sending data
   SoftWire.endTransmission();                   // Closing bus
-
-  //SoftWire.write(bytesCmd[0]);
-  //SoftWire.write(bytesCmd[1]);
-  //SoftWire.write(bytesCmd[2]);
-  //for(uint8_t i = 0; i < bytesDataLength; i++) SoftWire.write(bytesData[i]);
 }
 
-void writeNumber(uint16_t data){
+void writeLCD1(uint16_t data){
   // Masking data bytes (cleaning the digits only, leaving the rest)
   bytesData[DATABYTE1] &= (~mask & 0xff00000000) >> 32;
   bytesData[DATABYTE2] &= (~mask & 0x00ff000000) >> 24;
