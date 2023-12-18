@@ -83,6 +83,7 @@ void setup() {
   Wire.onReceive(receiveEvent);   // Registering event for receiving data
   
   // Begin GPS
+  delay(5000);  // Leave 2 seconds for the GPS to boot
   setupGPS(); 
   GPS_SERIAL.begin(GPS_WANTED_BAUDRATE); 
   gps.begin(); 
