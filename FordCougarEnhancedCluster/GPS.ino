@@ -36,42 +36,44 @@ const byte saveConfig[] = {0x06, 0x09, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
 // Send a packet to the receiver to restore default configuration.
 const byte restoreDefaults[] = {0x06, 0x09, 0x0D, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x17}; 
 
+// SYNC bytes required as headers for communicating with the GPS module
 const uint8_t sync1 = 0xB5;
 const uint8_t sync2 = 0x62;
 
 bool setupGPS(){
-    // Restore the receiver default configuration ONLY if GPS module is listening at 9600 bauds (default configuration)  
-    delay(100); // Little delay before flushing.
-    GPS_SERIAL.flush();
-    GPS_SERIAL.begin(GPS_DEFAULT_BAUDRATE);    
-    sendPacket(restoreDefaults, sizeof(restoreDefaults));
-    
-    // Enable AssistNow Autonomous
-    sendPacket(enableAssistNow, sizeof(enableAssistNow));
+  // Restore the receiver default configuration ONLY if GPS module is listening at 9600 bauds (default configuration)  
+  delay(100); // Little delay before flushing.
+  GPS_SERIAL.flush();
+  GPS_SERIAL.begin(GPS_DEFAULT_BAUDRATE);    
+  sendPacket(restoreDefaults, sizeof(restoreDefaults));
+  
+  // Enable AssistNow Autonomous
+  sendPacket(enableAssistNow, sizeof(enableAssistNow));
 
-    // Increase frequency to 100 ms.
-    sendPacket(setFrequency, sizeof(setFrequency));
+  // Increase frequency to 100 ms.
+  sendPacket(setFrequency, sizeof(setFrequency));
 
-    // Disable unnecessary channels like SBAS or QZSS.
-    sendPacket(disableUnnecessaryChannels, sizeof(disableUnnecessaryChannels));
+  // Disable unnecessary channels like SBAS or QZSS.
+  sendPacket(disableUnnecessaryChannels, sizeof(disableUnnecessaryChannels));
 
-    // Enable NAV-PVT messages.
-    sendPacket(enableNavPvt, sizeof(enableNavPvt));
+  // Enable NAV-PVT messages.
+  sendPacket(enableNavPvt, sizeof(enableNavPvt));
 
-    // Save configuration
-    sendPacket(saveConfig, sizeof(saveConfig));
+  // Save configuration
+  sendPacket(saveConfig, sizeof(saveConfig));
 
-    delay(100); // Little delay before flushing.
-    GPS_SERIAL.flush();
+  delay(100); // Little delay before flushing.
+  GPS_SERIAL.flush();
 
-    // Switch the receiver serial to the wanted baudrate and disable NMEA.
-    sendPacket(setBaudrate, sizeof(setBaudrate));
-    delay(100); // Little delay before flushing.
-    GPS_SERIAL.flush();
-    GPS_SERIAL.begin(GPS_WANTED_BAUDRATE);
-    lastGpsRead = millis();
+  // Switch the receiver serial to the wanted baudrate and disable NMEA.
+  sendPacket(setBaudrate, sizeof(setBaudrate));
+  delay(100); // Little delay before flushing.
+  GPS_SERIAL.flush();
+  GPS_SERIAL.begin(GPS_WANTED_BAUDRATE);
 
-    return true;
+  // GPS configured :)
+  lastGpsRead = millis();
+  return true;
 }
 
 // Send the packet specified to the receiver.
