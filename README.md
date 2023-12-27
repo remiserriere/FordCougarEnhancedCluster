@@ -24,3 +24,4 @@ In practice, only 16 bytes of data will be used on the cluster because some outp
 
 # TODO: Where to cut traces on the PCB
 With pictures
+![Pic01](pictures/pic01.png)
