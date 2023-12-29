@@ -8,9 +8,11 @@ Cut the I2C traces between the MC68HC11 and the PCF8576, connect an Arduino in-b
 
 I also decided to display the GPS time on the clock so I don't have to set the time anymore ;). The source code can be modified to set your own timezone and winter to summer time change. 
 
-${{\color{Red}{\Huge{\textsf{Be careful! This mod involves cutting very thin traces on your cluster motherboard! This could kill it!}}}}}\$
+${{\color{Red}{\Huge{\textsf{A few words of caution!}}}}}\$
 
-**You don't have to take the whole cluster apart, the PCB can be removed without disturbing the needles. Simply remove the back cover plastic plate (5 small Torx screws) and pry the board out. The needle motor pins are only pressure fits, they will come loose with a bit of force.**
+***Be careful! This mod involves cutting very thin traces on your cluster motherboard! This could kill it!***
+
+***You don't have to take the whole cluster apart, the PCB can be removed without disturbing the needles. Simply remove the back cover plastic plate (5 small Torx screws) and pry the board out. The needle motor pins are only pressure fits, they will come loose with a bit of force.***
 
 ***Please keep in mind this project has been designed with the 1998 model in mind! Here the Motorola is masked "0F60M" even if the PLCC-68 form factor don't match the datasheet of the MC68HC11 series, and the LCD driver has the custom part number N710020CFDC000. Make sure you have the same hardware on your cluster before doing anything! All this MIGHT NOT APPLY to other years!***
 
@@ -73,18 +75,20 @@ Yes! Here is the pinout for the white connector. The connector itself has a stan
 
 | Circuit  	| Function                                                                                 	|
 |----------	|------------------------------------------------------------------------------------------	|
-| ${{\color{Gray}{\textsf{9-WC16}}}}\$   	| ${{\color{Gray}{\textsf{Ground - All connected together on the cluster PCB, you can use any of them as ground}}}}\$    	|
-| ${{\color{Gray}{\textsf{91-WC43B}}}}\$ 	| ${{\color{Gray}{\textsf{Ground - All connected together on the cluster PCB, you can use any of them as ground}}}}\$    	|
-| ${{\color{Gray}{\textsf{91-GA7}}}}\$   	| ${{\color{Gray}{\textsf{Ground - All connected together on the cluster PCB, you can use any of them as ground}}}}\$    	|
-| ${{\color{Gray}{\textsf{91-WC43A}}}}\$ 	| ${{\color{Gray}{\textsf{Ground - All connected together on the cluster PCB, you can use any of them as ground}}}}\$    	|
-| ${{\color{Red}{\textsf{29-WC43}}}}\$  	| ${{\color{Red}{\textsf{Battery +12v - Hot at all time}}}}\$                                                           	|
-| ${{\color{Yellow}{\textsf{14-WC43}}}}\$  	| ${{\color{Yellow}{\textsf{Ignition ACC/RUN +12v - Hot when the key is in the ACC or RUN position}}}}\$                   	|
-| ${{\color{Orange}{\textsf{75-WC43}}}}\$  	| ${{\color{Orange}{\textsf{Ignition signal - Connect to 14-WC43 Ignition +12v to wake the cluster up}}}}\$                	|
-| ${{\color{#00A2E8}{\textsf{8-WC51}}}}\$   | ${{\color{#00A2E8}{\textsf{Trip computer switch RESET (connect to ground to simulate a press on the RESET button)}}}}\$   |
-| ${{\color{#00A2E8}{\textsf{8-WC52}}}}\$   | ${{\color{#00A2E8}{\textsf{Trip computer switch SELECT (connect to ground to simulate a press on the SELECT button)}}}}\$   |
-| ${{\color{#00A2E8}{\textsf{8-WC53}}}}\$   | ${{\color{#00A2E8}{\textsf{Trip computer switch UNITS (connect to ground to simulate a press on the UNITS button)}}}}\$   |
-| ${{\color{#00A2E8}{\textsf{8-WC54}}}}\$   | ${{\color{#00A2E8}{\textsf{Trip computer switch CLOCK (connect to ground to simulate a press on the CLOCK button)}}}}\$   |
+| ${{\color{Gray}{\textsf{9-WC16}}}}\$   	| Ground - All connected together on the cluster PCB, you can use any of them as ground    	|
+| ${{\color{Gray}{\textsf{91-WC43B}}}}\$ 	| Ground - All connected together on the cluster PCB, you can use any of them as ground    	|
+| ${{\color{Gray}{\textsf{91-GA7}}}}\$   	| Ground - All connected together on the cluster PCB, you can use any of them as ground    	|
+| ${{\color{Gray}{\textsf{91-WC43A}}}}\$ 	| Ground - All connected together on the cluster PCB, you can use any of them as ground    	|
+| ${{\color{Red}{\textsf{29-WC43}}}}\$  	| Battery +12v - Hot at all time                                                           	|
+| ${{\color{Yellow}{\textsf{14-WC43}}}}\$  	| Ignition ACC/RUN +12v - Hot when the key is in the ACC or RUN position                   	|
+| ${{\color{Orange}{\textsf{75-WC43}}}}\$  	| Ignition signal - Connect to 14-WC43 Ignition +12v to wake the cluster up               	|
+| ${{\color{#00A2E8}{\textsf{8-WC51}}}}\$   | Trip computer switch RESET (connect to ground to simulate a press on the RESET button)	|
+| ${{\color{#00A2E8}{\textsf{8-WC52}}}}\$   | Trip computer switch SELECT (connect to ground to simulate a press on the SELECT button)	|
+| ${{\color{#00A2E8}{\textsf{8-WC53}}}}\$   | Trip computer switch UNITS (connect to ground to simulate a press on the UNITS button)	|
+| ${{\color{#00A2E8}{\textsf{8-WC54}}}}\$   | Trip computer switch CLOCK (connect to ground to simulate a press on the CLOCK button)	|
 
 ![C808b white connector](pictures/pinout.png)
+
 ![Pinout02](pictures/pinout02.png)
+
 ![Pinout03](pictures/pinout03.png)
